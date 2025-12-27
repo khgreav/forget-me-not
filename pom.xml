@@ -48,6 +48,7 @@
           <filesets>
             <fileset>
               <directory>${project.basedir}/build</directory>
+              <directory>${project.basedir}/coverage</directory>
             </fileset>
           </filesets>
         </configuration>

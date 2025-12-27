@@ -11,7 +11,7 @@ The project is an implementation of the roadmap.sh [Task Tracker](https://roadma
 This project uses Maven, the app can be built using the following command:
 
 ```bash
-mvn compile
+mvn package
 ```
 
 The command compiles source files into a JAR file and produces an invocation script into `build/bin`.
