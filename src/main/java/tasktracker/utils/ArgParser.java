@@ -5,7 +5,7 @@ import java.lang.AssertionError;
 public final class ArgParser {
 
     private ArgParser() {
-        throw new AssertionError("Static only class.");
+        throw new AssertionError("Cannot instantiate ArgParser.");
     }
 
     public static void validateArgCount(int count, int min, int max) {

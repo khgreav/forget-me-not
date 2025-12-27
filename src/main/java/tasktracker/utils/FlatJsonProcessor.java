@@ -10,7 +10,11 @@ import java.util.Set;
 import tasktracker.enums.TaskStatus;
 import tasktracker.models.Task;
 
-public class FlatJsonProcessor {
+public final class FlatJsonProcessor {
+
+    private FlatJsonProcessor() {
+        throw new AssertionError("Cannot instantiate FlatJsonProcessor.");
+    }
 
     private static final Set<String> REQUIRED_KEYS = Set.of(
         "id",
@@ -20,7 +24,7 @@ public class FlatJsonProcessor {
         "updatedAt"
     );
 
-    public static Task deserializeObjectLine(String line) {
+    public static Task deserializeObject(String line) {
         int i = 0;
         int n = line.length();
 
@@ -28,17 +32,24 @@ public class FlatJsonProcessor {
 
         while (i < n) {
             // process one key per outer loop
-            while (line.charAt(i) != '"') {
+            while (i < n && line.charAt(i) != '"') {
                 i++;
+            }
+            if (i >= n) {
+                break;
             }
             // found start of key
             i++;
             int start = i;
             // find end of key
-            while (line.charAt(i) != '"') {
+            while (i < n && line.charAt(i) != '"') {
                 i++;
             }
+            if (i >= n) {
+                break;
+            }
             var key = line.substring(start, i);
+            i++;
             // check if key is valid
             if (!REQUIRED_KEYS.contains(key)) {
                 throw new IllegalArgumentException("Invalid record key: " + key);
@@ -47,20 +58,42 @@ public class FlatJsonProcessor {
             if (props.containsKey(key)) {
                 throw new IllegalArgumentException("Duplicate record key detected: " + key);
             }
-            // find start of value
-            while (line.charAt(i) != '"') {
+            // find k-v separator
+            while (i < n && (Character.isWhitespace(line.charAt(i)) || line.charAt(i) == ':')) {
                 i++;
             }
-            start = i;
-            // find end of value
-            while (line.charAt(i) != '"') {
-                i++;
+            if (i >= n) {
+                break;
             }
-            var value = line.substring(start, i);
-            if (key == "id") {
+            String value;
+            if (line.charAt(i) == '"') {
+                i++;
+                start = i;
+                while (i < n && line.charAt(i) != '"') {
+                    i++;
+                }
+                if (i >= n) {
+                    break;
+                }
+                value = line.substring(start, i);
+            } else {
+                start = i;
+                while (i < n && line.charAt(i) != ',' && line.charAt(i) != '}' && !Character.isWhitespace(n)) {
+                    if (!Character.isDigit(line.charAt(i))) {
+                        throw new IllegalArgumentException("ID property should contain a numeric value.");
+                    }
+                    i++;
+                }
+                if (i >= n) {
+                    break;
+                }
+                value = line.substring(start, i);
+            }
+            i++;
+            if (key.equals("id")) {
                 try {
                     var id = Integer.parseInt(value);
-                    if (id < 0) {
+                    if (id < 1) {
                         throw new IllegalArgumentException("ID property value should be non-zero positive integere.");
                     }
                     props.put(key, id);
@@ -70,9 +103,9 @@ public class FlatJsonProcessor {
                         e
                     );
                 }
-            } else if (key == "status") {
+            } else if (key.equals("status")) {
                 props.put(key, TaskStatus.fromString(value));
-            } else if (key == "createdAt" || key == "updatedAt") {
+            } else if (key.equals("createdAt") || key.equals("updatedAt")) {
                 try {
                     props.put(key, Instant.parse(value));
                 } catch (DateTimeParseException e) {
@@ -93,12 +126,17 @@ public class FlatJsonProcessor {
 
     public static String serialize(Iterator<Task> itr) {
         StringBuilder sb = new StringBuilder();
-        sb.append("[\n");
+        sb.append("[");
         while (itr.hasNext()) {
+            sb.append('\n');
             Task task = itr.next();
             sb.append("  ")
-                .append(task.jsonSerialize())
-                .append('\n');
+                .append(task.jsonSerialize());
+            if (itr.hasNext()) {
+                sb.append(',');
+            } else {
+                sb.append('\n');
+            }
         }
         sb.append("]\n");
         return sb.toString();

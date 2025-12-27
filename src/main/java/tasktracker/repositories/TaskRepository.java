@@ -79,20 +79,20 @@ public class TaskRepository {
         Files.writeString(
             this.storagePath,
             FlatJsonProcessor.serialize(this.tasks.values().iterator()),
-            StandardOpenOption.CREATE_NEW,
+            StandardOpenOption.CREATE,
             StandardOpenOption.TRUNCATE_EXISTING
         );
         Files.writeString(
             this.sequencePath,
-            String.format("%d\n", this.sequence),
-            StandardOpenOption.CREATE_NEW,
+            new StringBuilder().append(this.sequence).append('\n').toString(),
+            StandardOpenOption.CREATE,
             StandardOpenOption.TRUNCATE_EXISTING
         );
     }
 
     private void initializeStorage() throws IOException {
+        this.tasks = new HashMap<Integer, Task>();
         if (!Files.exists(this.storagePath)) {
-            this.tasks = new HashMap<Integer, Task>();
             return;
         }
         try (BufferedReader reader = Files.newBufferedReader(this.storagePath)) {
@@ -101,7 +101,7 @@ public class TaskRepository {
                 if (line.isEmpty() || line.startsWith("[") || line.startsWith("]") || line.startsWith("[]")) {
                     continue;
                 } 
-                var task = FlatJsonProcessor.deserializeObjectLine(line);
+                var task = FlatJsonProcessor.deserializeObject(line);
                 this.tasks.put(task.getId(), task);
             }
         }
@@ -111,13 +111,13 @@ public class TaskRepository {
         int maxId = this.tasks.keySet().stream()
             .mapToInt(Integer::intValue)
             .max()
-            .orElse(1);
+            .orElse(0);
         int sequenceCandidate = 1;
         if (Files.exists(sequencePath)) {
             var content = Files.readString(this.sequencePath).trim();
             sequenceCandidate = Integer.parseInt(content);
         }
-        this.sequence = Math.max(maxId, sequenceCandidate) + 1;
+        this.sequence = Math.max(maxId + 1, sequenceCandidate);
     }
 
 }

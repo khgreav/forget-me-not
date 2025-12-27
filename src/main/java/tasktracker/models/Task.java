@@ -1,6 +1,8 @@
 package tasktracker.models;
 
 import java.time.Instant;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.Map;
 import java.util.Objects;
 
@@ -59,24 +61,26 @@ public class Task {
     }
 
     public String cliSerialize() {
+        DateTimeFormatter fmt = new DateTimeFormatterBuilder().appendInstant(0).toFormatter();
         return String.format(
             "%-4d | %-60s | %-11s | %-24s | %s",
             this.id,
             this.desc,
             this.status.toString(),
-            this.createdAt.toString(),
-            this.updatedAt.toString()
+            fmt.format(this.createdAt),
+            fmt.format(this.updatedAt)
         );
     }
 
     public String jsonSerialize() {
+        DateTimeFormatter fmt = new DateTimeFormatterBuilder().appendInstant(0).toFormatter();
         return String.format(
-            "{\"id\":\"%d\",\"desc\":\"%s\",\"status\":\"%s\",\"createdAt\":\"%s\",\"updatedAt\":\"%s\"}",
+            "{\"id\":%d,\"desc\":\"%s\",\"status\":\"%s\",\"createdAt\":\"%s\",\"updatedAt\":\"%s\"}",
             this.id,
             this.desc,
             this.status.toString().toLowerCase(),
-            this.createdAt.toString(),
-            this.updatedAt.toString()
+            fmt.format(this.createdAt),
+            fmt.format(this.updatedAt)
         );
     }
 

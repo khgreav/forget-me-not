@@ -83,7 +83,7 @@ public class TaskTest {
     @Test
     void testJsonSerialize() {
         assertEquals(
-            "{\"id\":\"1\",\"desc\":\"description\",\"status\":\"todo\",\"createdAt\":\"2025-12-26T18:00:05Z\",\"updatedAt\":\"2025-12-26T19:42:12Z\"}",
+            "{\"id\":1,\"desc\":\"description\",\"status\":\"todo\",\"createdAt\":\"2025-12-26T18:00:05Z\",\"updatedAt\":\"2025-12-26T19:42:12Z\"}",
             task.jsonSerialize()
         );
     }
