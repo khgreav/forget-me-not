@@ -52,7 +52,3 @@ Delete task
 ```bash
 forget-me-not delete <ID>
 ```
-
-### Purpose
-
-The purpose of this project is 
