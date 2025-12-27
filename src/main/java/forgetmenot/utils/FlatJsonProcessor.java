@@ -1,4 +1,4 @@
-package tasktracker.utils;
+package forgetmenot.utils;
 
 import java.time.Instant;
 import java.time.format.DateTimeParseException;
@@ -7,8 +7,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import tasktracker.enums.TaskStatus;
-import tasktracker.models.Task;
+import forgetmenot.enums.TaskStatus;
+import forgetmenot.models.Task;
 
 public final class FlatJsonProcessor {
 

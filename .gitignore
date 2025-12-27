@@ -1,3 +1,5 @@
 .mvn
 .vscode
+build
+coverage
 target

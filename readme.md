@@ -1,46 +1,58 @@
-### Requirements
-The application should run from the command line, accept user actions and inputs as arguments, and store the tasks in a JSON file. The user should be able to:
+# Forget Me Not
 
-- Add, Update, and Delete tasks
-- Mark a task as in progress or done
-- List all tasks
-- List all tasks that are done
-- List all tasks that are not done
-- List all tasks that are in progress
+Forget Me Not is a simple CLI-based task tracker, it allows users to create, update and delete tasks. Each task has a status associated with it: TODO, IN PROGRESS and DONE.
 
-### API
+Tasks are stored in a JSON file. The app also maintains a sequence file to ensure that task IDs are unique.
+
+The project is an implementation of the roadmap.sh [Task Tracker](https://roadmap.sh/projects/task-tracker) project spec. The purpose of this project is to get familiar with and learn basics of Java 17 and Maven.
+
+### Build instructions
+
+This project uses Maven, the app can be built using the following command:
+
+```bash
+mvn compile
+```
+
+The command compiles source files into a JAR file and produces an invocation script into `build/bin`.
+
+### Usage
 
 Show help
 ```bash
-task-cli help
+forget-me-not help
 ```
 
 List all tasks
 ```bash
-task-cli list
+forget-me-not list
 ```
 
 List tasks by status
 ```bash
-task-cli list <status> # todo / in-progress / done
+forget-me-not list <status> # todo / in-progress / done
 ```
 
 Add task
 ```bash
-task-cli add <task_description>
+forget-me-not add <task_description>
 ```
 
 Update task - change description
 ```bash
-task-cli update <ID> <task_description>
+forget-me-not update <ID> <task_description>
 ```
 
 Change task status to in-progress or done
 ```bash
-task-cli mark <ID> <status> # in-progress / done
+forget-me-not mark <ID> <status> # in-progress / done
 ```
 
 Delete task
 ```bash
-task-cli delete <ID>
+forget-me-not delete <ID>
 ```
+
+### Purpose
+
+The purpose of this project is 

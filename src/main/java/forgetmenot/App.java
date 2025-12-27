@@ -1,18 +1,18 @@
-package tasktracker;
+package forgetmenot;
 
 import java.lang.IllegalArgumentException;
 import java.nio.file.Path;
 
-import tasktracker.enums.TaskStatus;
-import tasktracker.services.TaskService;
-import tasktracker.utils.ArgParser;
+import forgetmenot.enums.TaskStatus;
+import forgetmenot.services.TaskService;
+import forgetmenot.utils.ArgParser;
 
 public class App {
 
     public static String constructHelpMessage() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Task tracker\n\n")
-            .append("Usage: task-cli <command> [<arguments>...]\n\n")
+        sb.append("Forget Me Not - Task Tracker\n\n")
+            .append("Usage: forget-me-not <command> [<arguments>...]\n\n")
             .append("Commands:\n")
             .append("  help                         Show help message\n")
             .append("  list [<status>]              Lists task, optionally filtered by status (todo / in-progress / done)\n")
@@ -25,7 +25,7 @@ public class App {
 
     public static void main(String[] args) {
         if (args.length < 1 || args.length > 3) {
-            System.err.println("Invalid number of arguments, use help command for usage.");
+            System.err.println(constructHelpMessage());
             System.exit(1);
         }
 

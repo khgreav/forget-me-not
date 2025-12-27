@@ -1,12 +1,12 @@
-package tasktracker.services;
+package forgetmenot.services;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.NoSuchElementException;
 
-import tasktracker.enums.TaskStatus;
-import tasktracker.models.Task;
-import tasktracker.repositories.TaskRepository;
+import forgetmenot.enums.TaskStatus;
+import forgetmenot.models.Task;
+import forgetmenot.repositories.TaskRepository;
 
 public class TaskService {
     
@@ -19,6 +19,7 @@ public class TaskService {
 
     public void listAll() {
         var itr = repo.listAll();
+        System.out.println(Task.buildTableHeader());
         while (itr.hasNext()) {
             Task task = itr.next();
             System.out.println(task.cliSerialize());
@@ -27,6 +28,7 @@ public class TaskService {
 
     public void listByStatus(TaskStatus status) {
         var itr = repo.listAll();
+        System.out.println(Task.buildTableHeader());
         while (itr.hasNext()) {
             Task task = itr.next();
             if (task.getStatus() == status) {

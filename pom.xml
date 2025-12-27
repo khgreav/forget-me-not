@@ -3,9 +3,9 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>tasktracker</groupId>
+  <groupId>forgetmenot</groupId>
   <artifactId>forget-me-not</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
 
   <name>forget-me-not</name>
 
@@ -43,10 +43,18 @@
   <build>
     <plugins>
       <plugin>
+        <artifactId>maven-clean-plugin</artifactId>
+        <configuration>
+          <filesets>
+            <fileset>
+              <directory>${project.basedir}/build</directory>
+            </fileset>
+          </filesets>
+        </configuration>
+      </plugin>
+      <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.14</version>
-
         <executions>
           <!-- Attach JaCoCo agent to the test phase -->
           <execution>
@@ -61,6 +69,9 @@
             <goals>
               <goal>report</goal>
             </goals>
+            <configuration>
+              <outputDirectory>${project.basedir}/coverage</outputDirectory>
+            </configuration>
           </execution>
           <!-- CLI output -->
           <execution>
@@ -83,6 +94,30 @@
                 </rule>
               </rules>
             </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>appassembler-maven-plugin</artifactId>
+        <configuration>
+          <assembleDirectory>${project.basedir}/build</assembleDirectory>
+          <platforms>
+            <platform>unix</platform>
+          </platforms>
+          <programs>
+            <program>
+              <mainClass>forgetmenot.App</mainClass>
+              <id>forget-me-not</id>
+            </program>
+          </programs>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>assemble</goal>
+            </goals>
           </execution>
         </executions>
       </plugin>
@@ -132,9 +167,16 @@
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>exec-maven-plugin</artifactId>
           <version>3.6.3</version>
-          <configuration>
-            <mainClass>tasktracker.App</mainClass>
-          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>0.8.14</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>appassembler-maven-plugin</artifactId>
+          <version>2.1.0</version>
         </plugin>
       </plugins>
     </pluginManagement>

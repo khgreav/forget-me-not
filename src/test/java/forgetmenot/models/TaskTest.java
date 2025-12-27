@@ -1,4 +1,4 @@
-package tasktracker.models;
+package forgetmenot.models;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -15,7 +15,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import tasktracker.enums.TaskStatus;
+import forgetmenot.enums.TaskStatus;
 
 public class TaskTest {
 
@@ -75,7 +75,7 @@ public class TaskTest {
     @Test
     void testCliSerialize() {
         assertEquals(
-            "1    | description                                                  | todo        | 2025-12-26T18:00:05Z     | 2025-12-26T19:42:12Z",
+            "1    | description                                                  | todo        | 2025-12-26T18:00:05Z | 2025-12-26T19:42:12Z",
             task.cliSerialize()
         );
     }

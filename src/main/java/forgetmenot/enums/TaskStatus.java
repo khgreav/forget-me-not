@@ -1,4 +1,4 @@
-package tasktracker.enums;
+package forgetmenot.enums;
 
 public enum TaskStatus {
     TODO("todo"),

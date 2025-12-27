@@ -1,4 +1,4 @@
-package tasktracker.repositories;
+package forgetmenot.repositories;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,9 +11,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import tasktracker.enums.TaskStatus;
-import tasktracker.models.Task;
-import tasktracker.utils.FlatJsonProcessor;
+import forgetmenot.enums.TaskStatus;
+import forgetmenot.models.Task;
+import forgetmenot.utils.FlatJsonProcessor;
 
 public class TaskRepository {
 

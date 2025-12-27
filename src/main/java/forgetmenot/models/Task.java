@@ -1,4 +1,4 @@
-package tasktracker.models;
+package forgetmenot.models;
 
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
@@ -6,7 +6,8 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.util.Map;
 import java.util.Objects;
 
-import tasktracker.enums.TaskStatus;
+import forgetmenot.enums.TaskStatus;
+import forgetmenot.utils.Formatter;
 
 public class Task {
     
@@ -60,16 +61,31 @@ public class Task {
         return this.updatedAt;
     }
 
+    public static String buildTableHeader() {
+        return new StringBuilder()
+            .append(Formatter.padRight("ID", Formatter.ID_LEN)).append(" | ")
+            .append(Formatter.padRight("Description", Formatter.DESC_LEN)).append(" | ")
+            .append(Formatter.padRight("Status", Formatter.STATUS_LEN)).append(" | ")
+            .append(Formatter.padRight("Created at", Formatter.DATETIME_LEN)).append(" | ")
+            .append(Formatter.padRight("Last updated", Formatter.DATETIME_LEN)).append('\n')
+            .append(
+                Formatter.padRight(
+                    null,
+                    Formatter.ID_LEN + Formatter.DESC_LEN + Formatter.STATUS_LEN + (2 * Formatter.DATETIME_LEN) + 12,
+                    '='
+                )
+            ).toString();
+    }
+
     public String cliSerialize() {
         DateTimeFormatter fmt = new DateTimeFormatterBuilder().appendInstant(0).toFormatter();
-        return String.format(
-            "%-4d | %-60s | %-11s | %-24s | %s",
-            this.id,
-            this.desc,
-            this.status.toString(),
-            fmt.format(this.createdAt),
-            fmt.format(this.updatedAt)
-        );
+        return new StringBuilder()
+            .append(Formatter.padRight(String.valueOf(this.id), Formatter.ID_LEN)).append(" | ")
+            .append(Formatter.padRight(this.desc, Formatter.DESC_LEN)).append(" | ")
+            .append(Formatter.padRight(this.status.toString(), Formatter.STATUS_LEN)).append(" | ")
+            .append(Formatter.padRight(fmt.format(createdAt), Formatter.DATETIME_LEN)).append(" | ")
+            .append(Formatter.padRight(fmt.format(updatedAt), Formatter.DATETIME_LEN))
+            .toString();
     }
 
     public String jsonSerialize() {
