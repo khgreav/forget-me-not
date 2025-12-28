@@ -4,9 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.Instant;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -24,24 +25,31 @@ public class FlatJsonProcessorTest {
     ]
     """;
 
-    private static final HashMap<Integer, Task> TASK_MAP = new HashMap<>(
-        Map.of(
-            1, new Task(
+    private static final LinkedHashMap<Integer, Task> TASK_MAP = new LinkedHashMap<>();
+
+    @BeforeAll
+    static void setUp() {
+        TASK_MAP.put(
+            1,
+            new Task(
                 1,
                 "test",
                 TaskStatus.IN_PROGRESS,
                 Instant.parse("2025-12-27T12:50:30Z"),
                 Instant.parse("2025-12-27T13:08:51Z")
-            ),
-            2, new Task(
+            )
+        );
+        TASK_MAP.put(
+            2,
+            new Task(
                 2,
                 "another",
                 TaskStatus.DONE,
                 Instant.parse("2025-12-27T13:30:30Z"),
                 Instant.parse("2025-12-27T13:32:51Z")
             )
-        )
-    );
+        );
+    }
 
     @Test
     void testDeserializeObjectLine() {
@@ -142,7 +150,7 @@ public class FlatJsonProcessorTest {
     void testSerializeEmpty() {
         assertEquals(
             "[]\n",
-            FlatJsonProcessor.serialize(new HashMap<Integer, Task>().values().iterator())
+            FlatJsonProcessor.serialize(Collections.unmodifiableCollection(new LinkedHashMap<Integer, Task>().values()))
         );
     }
 
@@ -150,7 +158,7 @@ public class FlatJsonProcessorTest {
     void testSerialize() {
         assertEquals(
             JSON_STRING,
-            FlatJsonProcessor.serialize(TASK_MAP.values().iterator())
+            FlatJsonProcessor.serialize(Collections.unmodifiableCollection(TASK_MAP.values()))
         );
     }
 }

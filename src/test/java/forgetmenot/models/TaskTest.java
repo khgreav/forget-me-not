@@ -20,7 +20,7 @@ import forgetmenot.enums.TaskStatus;
 public class TaskTest {
 
     private static final int ID = 1;
-    
+
     private static final String DESC = "description";
 
     private static final TaskStatus STATUS = TaskStatus.TODO;
@@ -70,22 +70,6 @@ public class TaskTest {
         task.setStatus(TaskStatus.DONE);
         assertEquals(TaskStatus.DONE, task.getStatus());
         assertNotEquals(UPDATED_AT, task.getUpdatedAt());
-    }
-
-    @Test
-    void testCliSerialize() {
-        assertEquals(
-            "1    | description                                                  | todo        | 2025-12-26T18:00:05Z | 2025-12-26T19:42:12Z",
-            task.cliSerialize()
-        );
-    }
-
-    @Test
-    void testJsonSerialize() {
-        assertEquals(
-            "{\"id\":1,\"desc\":\"description\",\"status\":\"todo\",\"createdAt\":\"2025-12-26T18:00:05Z\",\"updatedAt\":\"2025-12-26T19:42:12Z\"}",
-            task.jsonSerialize()
-        );
     }
 
     @ParameterizedTest

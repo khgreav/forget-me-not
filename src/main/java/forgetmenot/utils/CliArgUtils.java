@@ -2,9 +2,9 @@ package forgetmenot.utils;
 
 import java.lang.AssertionError;
 
-public final class ArgParser {
+public final class CliArgUtils {
 
-    private ArgParser() {
+    private CliArgUtils() {
         throw new AssertionError("Cannot instantiate ArgParser.");
     }
 

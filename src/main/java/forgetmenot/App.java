@@ -5,7 +5,7 @@ import java.nio.file.Path;
 
 import forgetmenot.enums.TaskStatus;
 import forgetmenot.services.TaskService;
-import forgetmenot.utils.ArgParser;
+import forgetmenot.utils.CliArgUtils;
 
 public class App {
 
@@ -43,7 +43,7 @@ public class App {
                     return;
                 }
                 case "list" -> {
-                    ArgParser.validateArgCount(args.length, 1, 2);
+                    CliArgUtils.validateArgCount(args.length, 1, 2);
                     if (args.length == 1) {
                         service.listAll();
                     } else {
@@ -52,28 +52,34 @@ public class App {
                     }
                 }
                 case "add" -> {
-                    ArgParser.validateArgCount(args.length, 2, 2);
+                    CliArgUtils.validateArgCount(args.length, 2, 2);
                     service.addTask(args[1]);
                 }
                 case "update" -> {
-                    ArgParser.validateArgCount(args.length, 3, 3);
+                    CliArgUtils.validateArgCount(args.length, 3, 3);
                     service.update(
-                        ArgParser.parseId(args[1]),
+                        CliArgUtils.parseId(args[1]),
                         args[2]
                     );
                 }
                 case "mark" -> {
-                    ArgParser.validateArgCount(args.length, 3, 3);
-                    service.mark(
-                        ArgParser.parseId(args[1]),
+                    CliArgUtils.validateArgCount(args.length, 3, 3);
+                    service.update(
+                        CliArgUtils.parseId(args[1]),
                         TaskStatus.fromString(args[2])
                     );
                 }
                 case "delete" -> {
-                    ArgParser.validateArgCount(args.length, 2, 2);
-                    service.delete(ArgParser.parseId(args[1]));
+                    CliArgUtils.validateArgCount(args.length, 2, 2);
+                    service.delete(CliArgUtils.parseId(args[1]));
                 }
-                default -> throw new IllegalArgumentException(String.format("Invalid command %s", cmd));
+                default -> throw new IllegalArgumentException(
+                    new StringBuilder()
+                        .append("Invalid command: ")
+                        .append(cmd)
+                        .append('.')
+                        .toString()
+                );
             }
             service.save();
         } catch (Exception e) {

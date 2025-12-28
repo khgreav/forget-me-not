@@ -2,6 +2,7 @@ package forgetmenot.utils;
 
 import java.time.Instant;
 import java.time.format.DateTimeParseException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -99,7 +100,7 @@ public final class FlatJsonProcessor {
                     props.put(key, id);
                 } catch (Exception e) {
                     throw new IllegalArgumentException(
-                        String.format("Invalid ID property value: %s", e.getMessage()),
+                        "Invalid ID property value: " + e.getMessage(),
                         e
                     );
                 }
@@ -110,7 +111,7 @@ public final class FlatJsonProcessor {
                     props.put(key, Instant.parse(value));
                 } catch (DateTimeParseException e) {
                     throw new IllegalArgumentException(
-                        String.format("Invalid datetime property value format: %s", e.getMessage()),
+                        "Invalid datetime property value format: " +  e.getMessage(),
                         e
                     );
                 }
@@ -124,14 +125,15 @@ public final class FlatJsonProcessor {
         return Task.fromJson(props);
     }
 
-    public static String serialize(Iterator<Task> itr) {
+    public static String serialize(Collection<Task> tasks) {
         StringBuilder sb = new StringBuilder();
+        Iterator<Task> itr = tasks.iterator();
         sb.append("[");
         while (itr.hasNext()) {
             sb.append('\n');
             Task task = itr.next();
             sb.append("  ")
-                .append(task.jsonSerialize());
+                .append(TaskSerializer.jsonSerialize(task));
             if (itr.hasNext()) {
                 sb.append(',');
             } else {

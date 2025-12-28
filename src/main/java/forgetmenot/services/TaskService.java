@@ -7,6 +7,7 @@ import java.util.NoSuchElementException;
 import forgetmenot.enums.TaskStatus;
 import forgetmenot.models.Task;
 import forgetmenot.repositories.TaskRepository;
+import forgetmenot.utils.TaskSerializer;
 
 public class TaskService {
     
@@ -14,25 +15,22 @@ public class TaskService {
 
     public TaskService(Path storagePath, Path sequencePath) throws IOException {
         this.repo = new TaskRepository(storagePath, sequencePath);
-        this.repo.init();
     }
 
     public void listAll() {
-        var itr = repo.listAll();
-        System.out.println(Task.buildTableHeader());
-        while (itr.hasNext()) {
-            Task task = itr.next();
-            System.out.println(task.cliSerialize());
+        var tasks = repo.listAll();
+        System.out.println(TaskSerializer.buildTableHeader());
+        for (Task task : tasks) {
+            System.out.println(TaskSerializer.cliSerialize(task));
         }
     }
 
     public void listByStatus(TaskStatus status) {
-        var itr = repo.listAll();
-        System.out.println(Task.buildTableHeader());
-        while (itr.hasNext()) {
-            Task task = itr.next();
-            if (task.getStatus() == status) {
-                System.out.println(task.cliSerialize());
+        var tasks = repo.listAll();
+        System.out.println(TaskSerializer.buildTableHeader());
+        for (Task task : tasks) {
+            if (task.getStatus().equals(status)) {
+                System.out.println(TaskSerializer.cliSerialize(task));
             }
         }
     }
@@ -49,7 +47,7 @@ public class TaskService {
         System.out.println("Task successully updated.");
     }
 
-    public void mark(int id, TaskStatus status) {
+    public void update(int id, TaskStatus status) {
         var task = this.getTask(id);
         task.setStatus(status);
         this.repo.update(task);

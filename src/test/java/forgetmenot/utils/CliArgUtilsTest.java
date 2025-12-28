@@ -11,7 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class ArgParserTest {
+public class CliArgUtilsTest {
 
     static Stream<Arguments> argCountValidProvider() {
         return Stream.of(
@@ -33,7 +33,7 @@ public class ArgParserTest {
     @MethodSource("argCountValidProvider")
     void testValidateArgCountValid(int cnt, int min, int max) {
         assertDoesNotThrow(() -> {
-            ArgParser.validateArgCount(cnt, min, max);
+            CliArgUtils.validateArgCount(cnt, min, max);
         });
     }
 
@@ -41,22 +41,22 @@ public class ArgParserTest {
     @MethodSource("argCountInvalidProvider")
     void testValidateArgCountInvalid(int cnt, int min, int max) {
         assertThrows(IllegalArgumentException.class, () -> {
-            ArgParser.validateArgCount(cnt, min, max);
+            CliArgUtils.validateArgCount(cnt, min, max);
         });
     }
 
     @Test
     void testParseId() {
-        assertEquals(1, ArgParser.parseId("1"));
-        assertEquals(50, ArgParser.parseId("50"));
+        assertEquals(1, CliArgUtils.parseId("1"));
+        assertEquals(50, CliArgUtils.parseId("50"));
         assertThrows(IllegalArgumentException.class, () -> {
-            ArgParser.parseId("0");
+            CliArgUtils.parseId("0");
         });
         assertThrows(IllegalArgumentException.class, () -> {
-            ArgParser.parseId("-1");
+            CliArgUtils.parseId("-1");
         });
         assertThrows(IllegalArgumentException.class, () -> {
-            ArgParser.parseId("abc");
+            CliArgUtils.parseId("abc");
         });
     }
     

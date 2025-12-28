@@ -6,8 +6,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.time.Instant;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
@@ -22,12 +23,9 @@ public class TaskRepository {
     private Map<Integer, Task> tasks;
     private int sequence;
 
-    public TaskRepository(Path storagePath, Path sequencePath) {
+    public TaskRepository(Path storagePath, Path sequencePath) throws IOException {
         this.storagePath = storagePath;
         this.sequencePath = sequencePath;
-    }
-
-    public void init() throws IOException {
         this.initializeStorage();
         this.initializeSequence();
     }
@@ -49,8 +47,8 @@ public class TaskRepository {
         return id;
     }
 
-    public Iterator<Task> listAll() {
-        return tasks.values().iterator();
+    public Collection<Task> listAll() {
+        return Collections.unmodifiableCollection(this.tasks.values());
     }
 
     public Task get(int id) {
@@ -78,7 +76,7 @@ public class TaskRepository {
     public void persist() throws IOException {
         Files.writeString(
             this.storagePath,
-            FlatJsonProcessor.serialize(this.tasks.values().iterator()),
+            FlatJsonProcessor.serialize(Collections.unmodifiableCollection(this.tasks.values())),
             StandardOpenOption.CREATE,
             StandardOpenOption.TRUNCATE_EXISTING
         );
@@ -91,7 +89,7 @@ public class TaskRepository {
     }
 
     private void initializeStorage() throws IOException {
-        this.tasks = new HashMap<Integer, Task>();
+        this.tasks = new LinkedHashMap<Integer, Task>();
         if (!Files.exists(this.storagePath)) {
             return;
         }
