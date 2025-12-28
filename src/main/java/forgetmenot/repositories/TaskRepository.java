@@ -16,13 +16,41 @@ import forgetmenot.enums.TaskStatus;
 import forgetmenot.models.Task;
 import forgetmenot.utils.FlatJsonProcessor;
 
+/**
+ * Repository for managing {@link Task} entities.
+ * <p>
+ * This repository provides methods to create, read, update, and delete tasks.
+ * It also handles persistence of tasks to a file storage.
+ * </p>
+ */
 public class TaskRepository {
 
+    /**
+     * Path to the storage file.
+     */
     private Path storagePath;
+
+    /**
+     * Path to the sequence file.
+     */
     private Path sequencePath;
+
+    /**
+     * In-memory map of tasks.
+     */
     private Map<Integer, Task> tasks;
+
+    /**
+     * Sequence number for generating unique task IDs.
+     */
     private int sequence;
 
+    /**
+     * Constructs a new TaskRepository.
+     * @param storagePath Path to the storage file
+     * @param sequencePath Path to the sequence file
+     * @throws IOException if an I/O error occurs
+     */
     public TaskRepository(Path storagePath, Path sequencePath) throws IOException {
         this.storagePath = storagePath;
         this.sequencePath = sequencePath;
@@ -30,6 +58,11 @@ public class TaskRepository {
         this.initializeSequence();
     }
 
+    /**
+     * Creates a new task with the given description.
+     * @param desc Task description
+     * @return ID of the newly created task
+     */
     public int create(String desc) {
         var now = Instant.now();
         int id = this.sequence;
@@ -47,10 +80,20 @@ public class TaskRepository {
         return id;
     }
 
+    /**
+     * Returns all tasks in the repository.
+     * @return Collection of all tasks
+     */
     public Collection<Task> listAll() {
         return Collections.unmodifiableCollection(this.tasks.values());
     }
 
+    /**
+     * Retrieves a task by its ID.
+     * @param id Task ID
+     * @return Corresponding Task
+     * @throws NoSuchElementException if the task with the given ID does not exist
+     */
     public Task get(int id) {
         if (!this.tasks.containsKey(id)) {
             throw new NoSuchElementException("Task ID " + id + " does not exist.");
@@ -58,6 +101,11 @@ public class TaskRepository {
         return this.tasks.get(id);
     }
 
+    /**
+     * Updates an existing task.
+     * @param task Task to update
+     * @throws NoSuchElementException if the task with the given ID does not exist
+     */
     public void update(Task task) {
         var id = task.getId();
         if (!this.tasks.containsKey(id)) {
@@ -66,6 +114,11 @@ public class TaskRepository {
         tasks.put(id, task);
     }
 
+    /**
+     * Deletes a task by its ID.
+     * @param id Task ID
+     * @throws NoSuchElementException if the task with the given ID does not exist
+     */
     public void delete(int id) {
         if (!this.tasks.containsKey(id)) {
             throw new NoSuchElementException("Task ID %d does not exist" + id + '.');
@@ -73,6 +126,10 @@ public class TaskRepository {
         this.tasks.remove(id);
     }
 
+    /**
+     * Persists the current state of the repository to storage.
+     * @throws IOException if an I/O error occurs
+     */
     public void persist() throws IOException {
         Files.writeString(
             this.storagePath,
@@ -88,6 +145,10 @@ public class TaskRepository {
         );
     }
 
+    /** 
+     * Initializes the in-memory storage from the storage file.
+     * @throws IOException if an I/O error occurs
+     */
     private void initializeStorage() throws IOException {
         this.tasks = new LinkedHashMap<Integer, Task>();
         if (!Files.exists(this.storagePath)) {
@@ -105,6 +166,13 @@ public class TaskRepository {
         }
     }
 
+    /**
+     * Initializes the sequence number from the sequence file.
+     * <p>
+     * If the sequence file does not exist, the maximum task ID plus one is used as the initial sequence number.
+     * </p>
+     * @throws IOException if an I/O error occurs
+     */
     private void initializeSequence() throws IOException {
         int maxId = this.tasks.keySet().stream()
             .mapToInt(Integer::intValue)

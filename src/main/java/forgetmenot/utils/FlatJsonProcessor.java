@@ -11,12 +11,18 @@ import java.util.Set;
 import forgetmenot.enums.TaskStatus;
 import forgetmenot.models.Task;
 
+/**
+ * Utility class for processing flat JSON representations of {@link Task} objects.
+ */
 public final class FlatJsonProcessor {
 
     private FlatJsonProcessor() {
         throw new AssertionError("Cannot instantiate FlatJsonProcessor.");
     }
 
+    /**
+     * Set of required keys in the JSON representation of a Task.
+     */
     private static final Set<String> REQUIRED_KEYS = Set.of(
         "id",
         "desc",
@@ -25,6 +31,12 @@ public final class FlatJsonProcessor {
         "updatedAt"
     );
 
+    /**
+     * Deserializes a JSON string into a {@link Task} object.
+     * @param line JSON string representing a Task
+     * @return Deserialized Task object
+     * @throws IllegalArgumentException if the JSON string is invalid, contains invalid keys, or values
+     */
     public static Task deserializeObject(String line) {
         int i = 0;
         int n = line.length();
@@ -125,6 +137,11 @@ public final class FlatJsonProcessor {
         return Task.fromJson(props);
     }
 
+    /**
+     * Serializes a collection of {@link Task} objects into a JSON array string.
+     * @param tasks Collection of Task objects to serialize
+     * @return JSON array representation of the tasks
+     */
     public static String serialize(Collection<Task> tasks) {
         StringBuilder sb = new StringBuilder();
         Iterator<Task> itr = tasks.iterator();

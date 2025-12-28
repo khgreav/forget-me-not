@@ -5,20 +5,39 @@ import java.time.format.DateTimeFormatterBuilder;
 
 import forgetmenot.models.Task;
 
+/**
+ * Utility class for serializing {@link Task} objects for CLI and JSON output.
+ */
 public final class TaskSerializer {
 
+    /**
+     * Fixed length of ID table column.
+     */
     public static final int ID_LEN = 4;
 
+    /**
+     * Fixed length of description table column.
+     */
     public static final int DESC_LEN = 60;
 
+    /**
+     * Fixed length of status table column.
+     */
     public static final int STATUS_LEN = 11;
 
+    /**
+     * Fixed length of datetime table column.
+     */
     public static final int DATETIME_LEN = 20;
     
     private TaskSerializer() {
         throw new AssertionError("Cannot instantiate.");
     }
 
+    /**
+     * Builds the header row for the task table in CLI output.
+     * @return Formatted table header string
+     */
     public static String buildTableHeader() {
         return new StringBuilder()
             .append(
@@ -45,6 +64,11 @@ public final class TaskSerializer {
             ).toString();
     }
 
+    /**
+     * Serializes a {@link Task} object into a formatted string for CLI output.
+     * @param task Task object to serialize
+     * @return CLI-formatted task string
+     */
     public static String cliSerialize(Task task) {
         DateTimeFormatter fmt = new DateTimeFormatterBuilder().appendInstant(0).toFormatter();
         return new StringBuilder()
@@ -66,6 +90,11 @@ public final class TaskSerializer {
             .toString();
     }
 
+    /**
+     * Serializes a {@link Task} object into a JSON string.
+     * @param task Task object to serialize
+     * @return JSON representation of the task
+     */
     public static String jsonSerialize(Task task) {
         DateTimeFormatter fmt = new DateTimeFormatterBuilder().appendInstant(0).toFormatter();
         return String.format(

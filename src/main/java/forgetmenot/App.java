@@ -7,8 +7,18 @@ import forgetmenot.enums.TaskStatus;
 import forgetmenot.services.TaskService;
 import forgetmenot.utils.CliArgUtils;
 
+/**
+ * Main application class for Forget Me Not - Task Tracker.
+ * <p>
+ * This class contains the entry point of the application and handles command-line argument parsing.
+ * </p>
+ */
 public class App {
 
+    /**
+     * Constructs the help message for the application.
+     * @return Help message string
+     */
     public static String constructHelpMessage() {
         StringBuilder sb = new StringBuilder();
         sb.append("Forget Me Not - Task Tracker\n\n")
