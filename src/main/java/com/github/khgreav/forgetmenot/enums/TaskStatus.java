@@ -1,4 +1,4 @@
-package forgetmenot.enums;
+package com.github.khgreav.forgetmenot.enums;
 
 /**
  * Represents the status of a {@link Task}.

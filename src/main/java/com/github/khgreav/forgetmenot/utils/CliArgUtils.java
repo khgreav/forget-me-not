@@ -1,4 +1,4 @@
-package forgetmenot.utils;
+package com.github.khgreav.forgetmenot.utils;
 
 import java.lang.AssertionError;
 

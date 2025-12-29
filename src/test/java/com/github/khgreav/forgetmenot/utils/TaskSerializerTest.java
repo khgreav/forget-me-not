@@ -1,4 +1,4 @@
-package forgetmenot.utils;
+package com.github.khgreav.forgetmenot.utils;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -6,8 +6,8 @@ import java.time.Instant;
 
 import org.junit.jupiter.api.Test;
 
-import forgetmenot.enums.TaskStatus;
-import forgetmenot.models.Task;
+import com.github.khgreav.forgetmenot.enums.TaskStatus;
+import com.github.khgreav.forgetmenot.models.Task;
 
 public class TaskSerializerTest {
 

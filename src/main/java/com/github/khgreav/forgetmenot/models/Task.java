@@ -1,11 +1,11 @@
-package forgetmenot.models;
+package com.github.khgreav.forgetmenot.models;
 
 import java.time.Instant;
 import java.util.Map;
 import java.util.Objects;
 
-import forgetmenot.enums.TaskStatus;
-import forgetmenot.utils.MapUtils;
+import com.github.khgreav.forgetmenot.enums.TaskStatus;
+import com.github.khgreav.forgetmenot.utils.MapUtils;
 
 /**
  * Represents a task.

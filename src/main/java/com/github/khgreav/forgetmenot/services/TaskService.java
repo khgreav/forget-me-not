@@ -1,13 +1,13 @@
-package forgetmenot.services;
+package com.github.khgreav.forgetmenot.services;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.NoSuchElementException;
 
-import forgetmenot.enums.TaskStatus;
-import forgetmenot.models.Task;
-import forgetmenot.repositories.TaskRepository;
-import forgetmenot.utils.TaskSerializer;
+import com.github.khgreav.forgetmenot.enums.TaskStatus;
+import com.github.khgreav.forgetmenot.models.Task;
+import com.github.khgreav.forgetmenot.repositories.TaskRepository;
+import com.github.khgreav.forgetmenot.utils.TaskSerializer;
 
 /**
  * Service layer for managing tasks.

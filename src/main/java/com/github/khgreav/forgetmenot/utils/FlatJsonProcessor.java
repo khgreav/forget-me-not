@@ -1,4 +1,4 @@
-package forgetmenot.utils;
+package com.github.khgreav.forgetmenot.utils;
 
 import java.time.Instant;
 import java.time.format.DateTimeParseException;
@@ -8,8 +8,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import forgetmenot.enums.TaskStatus;
-import forgetmenot.models.Task;
+import com.github.khgreav.forgetmenot.enums.TaskStatus;
+import com.github.khgreav.forgetmenot.models.Task;
 
 /**
  * Utility class for processing flat JSON representations of {@link Task} objects.

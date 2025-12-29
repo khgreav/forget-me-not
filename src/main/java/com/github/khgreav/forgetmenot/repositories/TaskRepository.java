@@ -1,4 +1,4 @@
-package forgetmenot.repositories;
+package com.github.khgreav.forgetmenot.repositories;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,9 +12,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import forgetmenot.enums.TaskStatus;
-import forgetmenot.models.Task;
-import forgetmenot.utils.FlatJsonProcessor;
+import com.github.khgreav.forgetmenot.enums.TaskStatus;
+import com.github.khgreav.forgetmenot.models.Task;
+import com.github.khgreav.forgetmenot.utils.FlatJsonProcessor;
 
 /**
  * Repository for managing {@link Task} entities.

@@ -1,4 +1,4 @@
-package forgetmenot.enums;
+package com.github.khgreav.forgetmenot.enums;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

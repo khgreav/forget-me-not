@@ -1,9 +1,9 @@
-package forgetmenot.utils;
+package com.github.khgreav.forgetmenot.utils;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 
-import forgetmenot.models.Task;
+import com.github.khgreav.forgetmenot.models.Task;
 
 /**
  * Utility class for serializing {@link Task} objects for CLI and JSON output.

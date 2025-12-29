@@ -1,11 +1,11 @@
-package forgetmenot;
+package com.github.khgreav.forgetmenot;
 
 import java.lang.IllegalArgumentException;
 import java.nio.file.Path;
 
-import forgetmenot.enums.TaskStatus;
-import forgetmenot.services.TaskService;
-import forgetmenot.utils.CliArgUtils;
+import com.github.khgreav.forgetmenot.enums.TaskStatus;
+import com.github.khgreav.forgetmenot.services.TaskService;
+import com.github.khgreav.forgetmenot.utils.CliArgUtils;
 
 /**
  * Main application class for Forget Me Not - Task Tracker.

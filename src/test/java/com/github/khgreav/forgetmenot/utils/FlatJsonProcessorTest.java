@@ -1,4 +1,4 @@
-package forgetmenot.utils;
+package com.github.khgreav.forgetmenot.utils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -12,8 +12,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import forgetmenot.enums.TaskStatus;
-import forgetmenot.models.Task;
+import com.github.khgreav.forgetmenot.enums.TaskStatus;
+import com.github.khgreav.forgetmenot.models.Task;
 
 public class FlatJsonProcessorTest {
 
